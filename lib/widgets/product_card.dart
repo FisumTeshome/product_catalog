@@ -133,16 +133,27 @@ class ProductCard extends StatelessWidget {
                       onPressed:
                           product.stock > 0
                               ? () {
-                                cartProvider.addItem(product);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      '${product.name} added to cart',
+                                try {
+                                  cartProvider.addItem(product);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('${product.name} added to cart'),
+                                      duration: const Duration(seconds: 2),
                                     ),
-                                    duration: const Duration(seconds: 2),
-                                  ),
-                                );
-                              }
+                                  );
+                                                          
+                                                          
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(e.toString()),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                                  
+                                }
+
                               : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isInCart ? Colors.orange : Colors.blue,

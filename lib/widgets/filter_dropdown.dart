@@ -24,7 +24,9 @@ class FilterDropdown extends StatelessWidget {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          value: selectedCategory,
+          value: selectedCategory != null && categories.contains(selectedCategory)
+              ? selectedCategory
+              : null,
           hint: const Text('All Categories'),
           isExpanded: true,
           items: [
