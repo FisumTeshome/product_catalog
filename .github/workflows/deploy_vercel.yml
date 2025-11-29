@@ -25,6 +25,13 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
+      - name: Ensure favicon.ico exists
+        run: |
+          # On Linux/macOS runners, copy the existing PNG to .ico so builds include it
+          if [ -f web/favicon.png ]; then
+            cp web/favicon.png web/favicon.ico || true
+          fi
+
       - name: Build Flutter web
         run: flutter build web --release
 
