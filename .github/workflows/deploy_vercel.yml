@@ -36,11 +36,14 @@ jobs:
         run: flutter build web --release
 
       - name: Fail if Vercel token missing
-        if: ${{ !secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          echo "ERROR: VERCEL_TOKEN secret is not set for this repository."
-          echo "Add it under Settings → Secrets and variables → Actions and re-run the workflow."
-          exit 1
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "ERROR: VERCEL_TOKEN secret is not set for this repository."
+            echo "Add it under Settings → Secrets and variables → Actions and re-run the workflow."
+            exit 1
+          fi
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
